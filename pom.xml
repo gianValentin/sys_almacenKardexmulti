@@ -1,0 +1,133 @@
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>pe.senati</groupId>
+  <artifactId>SistemaKardexmulti</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  
+  <!-- app web -->
+  <packaging>war</packaging>
+
+  <name>SistemaKardexmulti</name>
+  <!-- FIXME change it to the project's website -->
+  <url>http://www.example.com</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
+  </properties>
+
+  <dependencies>
+    
+    <!-- uso de spring mvc -->
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-webmvc</artifactId>
+        <version>4.3.20.RELEASE</version>
+    </dependency>
+    
+    <!-- uso de servlets(controladores) -->
+    <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>javax.servlet-api</artifactId>
+        <version>4.0.0</version>
+        <scope>provided</scope>
+    </dependency>
+    
+    <!-- uso de JSTL -->
+    <dependency>
+        <groupId>jstl</groupId>
+        <artifactId>jstl</artifactId>
+        <version>1.2</version>
+    </dependency>
+    
+    <!-- uso de JPA Hibernate -->
+    <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-entitymanager</artifactId>
+        <version>4.3.10.Final</version>
+    </dependency>
+    
+    <!-- uso de ORM (mapear clases a tablas) -->
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-orm</artifactId>
+        <version>4.3.20.RELEASE</version>
+    </dependency>
+    
+    <!-- uso de Pool de conexiones -->
+    <dependency>    
+        <groupId>c3p0</groupId>
+        <artifactId>c3p0</artifactId>
+        <version>0.9.1.2</version>
+    </dependency>
+    <!-- Spring Security -->
+    <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-config</artifactId>
+        <version>4.2.10.RELEASE</version>
+    </dependency>
+    <!---->
+    <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-config</artifactId>
+        <version>4.2.10.RELEASE</version>
+    </dependency>
+     <!---->
+    <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-taglibs</artifactId>
+        <version>4.2.10.RELEASE</version>
+    </dependency>
+    <!-- uso de mysql -->   
+    <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>8.0.16</version>
+    </dependency>
+    
+    <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+    <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>2.9.10.1</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+    <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-core</artifactId>
+        <version>2.9.9</version>
+    </dependency>
+    
+  </dependencies>
+          
+  
+  <build>    
+      <plugins>
+          
+          <!-- plugin para configurar el puerto y el path principal con tomcat7 -->
+          <plugin>
+            <groupId>org.apache.tomcat.maven</groupId>
+            <artifactId>tomcat7-maven-plugin</artifactId>
+            <version>2.1</version> <!-- para puertos diferente del 8080 -->
+            <configuration>
+              <port>8090</port> <!-- se define el puerto -->
+              <path>/senati</path> <!-- se define la ruta principal de la página -->
+            </configuration>
+          </plugin>
+          
+          <!-- plugin para bloquear el archivo web.xml -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <configuration>
+                <failOnMissingWebXml>false</failOnMissingWebXml>
+            </configuration>
+          </plugin>
+          
+      </plugins>      
+  </build>
+</project>
