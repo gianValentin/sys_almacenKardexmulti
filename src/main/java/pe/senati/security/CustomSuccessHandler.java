@@ -30,10 +30,14 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
 
     @Override
     protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+                
+        request.getSession(false).setMaxInactiveInterval(600);
         //url destino
         String TargetURL=this.determineTargetUrl(authentication);    
         //redireccionar a la url destino
         redirectStrategy.sendRedirect(request, response, TargetURL);     
+        
+        
     }
 
     

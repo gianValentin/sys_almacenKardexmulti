@@ -62,10 +62,10 @@ public class WebConfig extends WebMvcConfigurerAdapter
         
         //driver and url for MySQL 8.x
         cpds.setDriverClass("com.mysql.cj.jdbc.Driver"); //driver
-        cpds.setJdbcUrl("jdbc:mysql://node41855-env-7484652.jelastic.saveincloud.net:3306/dbSistemaBotica?serverTimezone=UTC"); //url
+        cpds.setJdbcUrl("jdbc:mysql://localhost:3306/dbKardexmulti?serverTimezone=UTC"); //url
         
         cpds.setUser("root"); //usuario
-        cpds.setPassword("FAAqek43532"); //password
+        cpds.setPassword("48836498@"); //password
         
         cpds.setMinPoolSize(10); //minima cant de conexiones
         cpds.setMaxPoolSize(50); //maxima cant de conexiones

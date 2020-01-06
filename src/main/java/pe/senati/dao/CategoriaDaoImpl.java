@@ -30,12 +30,14 @@ public class CategoriaDaoImpl implements CategoriaDao{
 
     @Override
     public void delete(Integer id_categoria) {
-        entityManager.remove(entityManager.find(CategoriaVo.class, id_categoria));
+        Query query = entityManager.createNativeQuery("update categorias set status='DELETE' where id_categoria=:param", CategoriaVo.class);
+        query.setParameter("param", id_categoria);        
+        query.executeUpdate();
     }
 
     @Override
     public Collection<CategoriaVo> findAll() {
-        Query query=entityManager.createNativeQuery("select * from categorias",CategoriaVo.class);
+        Query query=entityManager.createNativeQuery("select * from categorias where status!='DELETE'",CategoriaVo.class);
         return query.getResultList();
     }
 

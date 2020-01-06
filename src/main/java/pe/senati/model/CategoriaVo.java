@@ -12,7 +12,6 @@ import java.util.Collection;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,10 +27,13 @@ public class CategoriaVo implements Serializable {
     private Integer id_categoria;
     
     @Column
-    private String categoria;
+    private String codigo;
     
     @Column
-    private String descripcion;
+    private String categoria;    
+    
+    @Column
+    private String status = "Active";
     
     @JsonIgnore
     @OneToMany(mappedBy = "categoria")
@@ -78,7 +80,7 @@ public class CategoriaVo implements Serializable {
     }
 
     public void setCategoria(String categoria) {
-        this.categoria = categoria;
+        this.categoria = categoria.toUpperCase();
     }
 
     public Collection<ProductoVo> getItemsCategoria() {
@@ -89,13 +91,25 @@ public class CategoriaVo implements Serializable {
         this.itemsCategoria = itemsCategoria;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getStatus() {
+        return status;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setStatus(String status) {
+        this.status = status;
     }
-    
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo.toUpperCase();
+    }        
+
+    @Override
+    public String toString() {
+        return "CategoriaVo{" + "id_categoria=" + id_categoria + ", codigo=" + codigo + ", categoria=" + categoria + ", status=" + status + ", itemsCategoria=" + itemsCategoria + '}';
+    }   
    
 }

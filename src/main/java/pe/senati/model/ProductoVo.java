@@ -5,22 +5,17 @@
  */
 package pe.senati.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -33,23 +28,19 @@ public class ProductoVo implements Serializable {
     private Integer id_producto;
     
     @Column
-    private String nombre_comercial;
+    private String codigo_producto;
     
     @Column
-    private String nombre_generico;
+    private String nombre;
     
     @Column
-    private String concentracion;
+    private String nombre_reducido;
     
     @Column
-    private Integer stock;
+    private String abrev_unidad;    
     
     @Column
-    private Double precio;
-    
-    @Column
-    @DateTimeFormat(pattern = "yyyy-MM-dd",iso = DateTimeFormat.ISO.DATE)
-    private Date fecha_caducidad;
+    private String status = "Active";
     
     @Column
     @DateTimeFormat(pattern = "yyyy-MM-dd",iso = DateTimeFormat.ISO.DATE)
@@ -57,11 +48,11 @@ public class ProductoVo implements Serializable {
     
     @ManyToOne
     @JoinColumn(
-            name = "id_presentacion",
+            name = "id_tipo",
             nullable = false,            
-            foreignKey = @ForeignKey(foreignKeyDefinition = "foreign key (id_presentacion) references presentaciones (id_presentacion)")
+            foreignKey = @ForeignKey(foreignKeyDefinition = "foreign key (id_tipo) references tipos (id_tipo)")
     )
-    private PresentacionVo presentacion;
+    private TipoVo tipo;
     
     @ManyToOne
     @JoinColumn(
@@ -69,11 +60,15 @@ public class ProductoVo implements Serializable {
             nullable = false,            
             foreignKey = @ForeignKey(foreignKeyDefinition = "foreign key (id_categoria) references categorias (id_categoria)")
     )
-    private CategoriaVo categoria;
-    
-    @JsonIgnore
-    @OneToMany(mappedBy = "id.productoVo")
-    private Set<DetalleVo> itemsDetalle=new HashSet<>();
+    private CategoriaVo categoria;          
+            
+    @ManyToOne
+    @JoinColumn(
+            name = "id_unidad",
+            nullable = false,            
+            foreignKey = @ForeignKey(foreignKeyDefinition = "foreign key (id_unidad) references unidades (id_unidad)")
+    )
+    private UnidadVo unidad;  
 
     public ProductoVo() {
     }
@@ -111,36 +106,36 @@ public class ProductoVo implements Serializable {
         this.id_producto = id_producto;
     }
 
-    public String getNombre_comercial() {
-        return nombre_comercial;
+    public String getCodigo_producto() {
+        return codigo_producto;
     }
 
-    public void setNombre_comercial(String nombre_comercial) {
-        this.nombre_comercial = nombre_comercial;
+    public void setCodigo_producto(String codigo_producto) {
+        this.codigo_producto = codigo_producto.toUpperCase();
+    }        
+
+    public String getNombre() {
+        return nombre;
     }
 
-    public String getNombre_generico() {
-        return nombre_generico;
+    public void setNombre(String nombre) {
+        this.nombre = nombre.toUpperCase();
     }
 
-    public void setNombre_generico(String nombre_generico) {
-        this.nombre_generico = nombre_generico;
+    public String getNombre_reducido() {
+        return nombre_reducido;
     }
 
-    public String getConcentracion() {
-        return concentracion;
+    public void setNombre_reducido(String nombre_reducido) {
+        this.nombre_reducido = nombre_reducido.toUpperCase();
     }
 
-    public void setConcentracion(String concentracion) {
-        this.concentracion = concentracion;
+    public String getAbrev_unidad() {
+        return abrev_unidad;
     }
 
-    public Date getFecha_caducidad() {
-        return fecha_caducidad;
-    }
-
-    public void setFecha_caducidad(Date fecha_caducidad) {
-        this.fecha_caducidad = fecha_caducidad;
+    public void setAbrev_unidad(String abrev_unidad) {
+        this.abrev_unidad = abrev_unidad.toUpperCase();
     }
 
     public Date getFecha_registro() {
@@ -151,27 +146,12 @@ public class ProductoVo implements Serializable {
         this.fecha_registro = fecha_registro;
     }
 
-    public Set<DetalleVo> getItemsDetalle() {
-        return itemsDetalle;
+    public TipoVo getTipo() {
+        return tipo;
     }
 
-    public void setItemsDetalle(Set<DetalleVo> itemsDetalle) {
-        this.itemsDetalle = itemsDetalle;
-    }        
-        public Integer getStock() {
-        return stock;
-    }
-
-    public void setStock(Integer stock) {
-        this.stock = stock;
-    }
-
-    public PresentacionVo getPresentacion() {
-        return presentacion;
-    }
-
-    public void setPresentacion(PresentacionVo presentacion) {
-        this.presentacion = presentacion;
+    public void setTipo(TipoVo tipo) {
+        this.tipo = tipo;
     }
 
     public CategoriaVo getCategoria() {
@@ -182,12 +162,25 @@ public class ProductoVo implements Serializable {
         this.categoria = categoria;
     }
 
-    public Double getPrecio() {
-        return precio;
+    public UnidadVo getUnidad() {
+        return unidad;
     }
 
-    public void setPrecio(Double precio) {
-        this.precio = precio;
+    public void setUnidad(UnidadVo unidad) {
+        this.unidad = unidad;
+    }      
+
+    public String getStatus() {
+        return status;
     }
-        
+
+    public void setStatus(String status) {
+        this.status = status;
+    }        
+
+    @Override
+    public String toString() {
+        return "ProductoVo{" + "id_producto=" + id_producto + ", codigo_producto=" + codigo_producto + ", nombre=" + nombre + ", nombre_reducido=" + nombre_reducido + ", abrev_unidad=" + abrev_unidad + ", fecha_registro=" + fecha_registro + ", tipo=" + tipo + ", categoria=" + categoria + ", unidad=" + unidad + '}';
+    }
+    
 }

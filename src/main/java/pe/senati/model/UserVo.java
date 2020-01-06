@@ -63,11 +63,7 @@ public class UserVo implements Serializable {
             joinColumns = @JoinColumn(name = "id_user",foreignKey = @ForeignKey(foreignKeyDefinition = "foreign key (id_user) references users(id_user)")),
             inverseJoinColumns = @JoinColumn(name = "id_role",foreignKey = @ForeignKey(foreignKeyDefinition = "foreign key (id_role) references roles(id_role)"))
     )
-    private Set<RoleVo> itemsRole =new HashSet<RoleVo>();
-    
-    @JsonIgnore
-    @OneToMany(mappedBy = "user")
-    private Collection<VentaVo> itemsVenta=new ArrayList<>();
+    private Set<RoleVo> itemsRole =new HashSet<RoleVo>();    
     
 
     public UserVo() {
@@ -163,13 +159,5 @@ public class UserVo implements Serializable {
     public void setItemsRole(Set<RoleVo> itemsRole) {
         this.itemsRole = itemsRole;
     }        
-
-    public Collection<VentaVo> getItemsVenta() {
-        return itemsVenta;
-    }
-
-    public void setItemsVenta(Collection<VentaVo> itemsVenta) {
-        this.itemsVenta = itemsVenta;
-    }
     
 }

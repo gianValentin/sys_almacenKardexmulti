@@ -43,10 +43,8 @@ public class CategoriaController {
     
     @PostMapping(value = "/insertCategoria")    
     @ResponseBody
-    public String insertCategoria_post(HttpServletRequest request){        
-        CategoriaVo categoriaVo=new CategoriaVo();           
-        categoriaVo.setCategoria(request.getParameter("categoria"));
-        categoriaVo.setDescripcion(request.getParameter("descripcion"));
+    public String insertCategoria_post(CategoriaVo categoriaVo){
+        System.out.println(categoriaVo);
         categoriaService.insert(categoriaVo);
         return "OK";        
     }
@@ -55,17 +53,14 @@ public class CategoriaController {
     @ResponseBody
     public String eliminarCategoria_post(HttpServletRequest request){    
         Integer id_categoria= Integer.parseInt(request.getParameter("id_categoria"));
+        System.out.println(id_categoria);
         categoriaService.delete(id_categoria);
         return "OK";        
     }
     
     @PostMapping(value = "/updateCategoria")    
     @ResponseBody
-    public String editarCategoria_post(HttpServletRequest request){
-        CategoriaVo categoriaVo=new CategoriaVo();     
-        categoriaVo.setId_categoria(Integer.parseInt(request.getParameter("id_categoria")));
-        categoriaVo.setCategoria(request.getParameter("categoria"));
-        categoriaVo.setDescripcion(request.getParameter("descripcion"));
+    public String editarCategoria_post(CategoriaVo categoriaVo){        
         categoriaService.update(categoriaVo);
         return "OK";        
     }

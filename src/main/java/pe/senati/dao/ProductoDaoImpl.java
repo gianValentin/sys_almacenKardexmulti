@@ -7,6 +7,7 @@ package pe.senati.dao;
 
 import java.util.Collection;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
@@ -35,7 +36,7 @@ public class ProductoDaoImpl implements ProductoDao{
 
     @Override
     public Collection<ProductoVo> findAll() {
-        Query query = entityManager.createNativeQuery("select * from productos", ProductoVo.class);
+        Query query = entityManager.createNativeQuery("select * from productos where status!='DELETE'", ProductoVo.class);
         return query.getResultList();
     }
 
@@ -50,6 +51,17 @@ public class ProductoDaoImpl implements ProductoDao{
         query.setParameter("param1", nombre+"%");
         query.setParameter("param2", nombre+"%");
         return query.getResultList();
+    }
+
+    @Override
+    public String getCodigoTop() {
+        Query query = entityManager.createNativeQuery("select codigo_producto from productos order by codigo_producto desc limit 1");
+        String codigo=null;
+        try{
+            codigo = (String)query.getSingleResult();
+        }catch(NoResultException ex){
+        }
+        return codigo;
     }
     
 }

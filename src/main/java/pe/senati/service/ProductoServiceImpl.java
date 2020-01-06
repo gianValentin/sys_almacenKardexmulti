@@ -6,6 +6,7 @@
 package pe.senati.service;
 
 import java.util.Collection;
+import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -55,5 +56,15 @@ public class ProductoServiceImpl implements ProductoService{
     public Collection<ProductoVo> findByNombre(String nombre) {
         return productoDao.findByNombre(nombre);
     }
-    
+
+    @Override
+    public String getCodigoTop() {
+        String codigo = productoDao.getCodigoTop();
+        if(Objects.equals(null, codigo))
+            codigo="P0001";
+       else
+            codigo="P"+String.format("%04d",(Integer.parseInt(codigo.substring(1))+1));   
+        return codigo;
+    }
+       
 }

@@ -18,4 +18,6 @@ public interface ProductoDao {
     public abstract Collection<ProductoVo> findAll();
     public abstract Collection<ProductoVo> findByNombre(String nombre);
     public abstract ProductoVo findById(Integer id_producto);
+    
+    public abstract String getCodigoTop();
 }
