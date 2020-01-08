@@ -1,3 +1,4 @@
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -43,12 +44,12 @@
           <!-- Left col -->
           <section class="col-lg-8 offset-md-2 connectedSortable">
             <!-- Custom tabs (Charts with tabs)-->
-
+            
             <div class="card card-secondary">
               <div class="card-header">
                 <h3 class="card-title">Formulario de Producto</h3>
               </div>
-              <div class="card-body">
+              <div class="card-body">               
                 <form id="add-form">
                   <div class="row">
                     <div class="col-md-3">
@@ -75,10 +76,12 @@
                     <div class="col-md-3">
                       <div class="form-group">
                         <label for="txtPrueba">Estado</label>
-                        <input type="text" autocomplete="off" class="form-control" id="txtPrueba" name="status" placeholder="status" required>
+                        <select class="custom-select" name="status" id="cbxUnidad" tabindex="3">
+                            <option value="ACTIVE">Activado</option>
+                            <option value="DESACTIVE">Desactivado</option>
+                        </select>
                       </div>
-                    </div>                                          
-                      
+                    </div>                                                                
                   </div>
                 </form>
               </div>
@@ -135,6 +138,7 @@
 				<div class="container">
 					<form id="frm-editar">
                                             <input type="hidden" name="id_categoria"/>
+                                            <input type="hidden" name="user.id_user"/>
 						<div class="form-group row">
 							<label class="col-sm-3 col-form-label col-form-label-sm">Codigo Categoria:</label>								
 							<div class="col-md-4">
@@ -150,9 +154,12 @@
 						<div class="form-group row">
 							<label for="txtEditarDescripcion" class="col-sm-3 col-form-label col-form-label-sm">Estado</label>
 							<div class="col-sm-9">
-                                                            <input type="text" class="form-control form-control-sm" placeholder="Estatus" name="status">
+                                                            <select class="custom-select" name="status" id="cbxUnidad" tabindex="3">
+                                                                <option value="ACTIVE">Activado</option>
+                                                                <option value="DESACTIVE">Desactivado</option>
+                                                            </select>
 							</div>
-						</div>
+						</div>                                                
 					</form>
 				</div>
 			</div>
@@ -224,7 +231,8 @@
                             $('input[name="id_categoria"]','#frm-editar').val(response.id_categoria);                            			
                             $('input[name="codigo"]','#frm-editar').val(response.codigo);                            			
                             $('input[name="categoria"]','#frm-editar').val(response.categoria);                            			
-                            $('input[name="status"]','#frm-editar').val(response.status);                            			
+                            $('select[name="status"]','#frm-editar').val(response.status);                            			
+                            $('input[name="user.id_user"]','#frm-editar').val(response.user.id_user);                            			
                         }
                     });		
                     idProducto=id;
@@ -235,7 +243,7 @@
                         var datos=$('#frm-editar').serializeArray(); 
                         console.log(datos);
                         datos.push({name:'${_csrf.parameterName}',value:'${_csrf.token}'});
-                      
+                        console.log(datos);
                         $.post("<c:url value="/updateCategoria"/>",datos,(response)=>{
                               if(response=="OK"){
                                       findAll();

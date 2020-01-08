@@ -11,6 +11,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
+import pe.senati.model.CategoriaVo;
 import pe.senati.model.ProductoVo;
 
 @Repository
@@ -31,7 +32,9 @@ public class ProductoDaoImpl implements ProductoDao{
 
     @Override
     public void delete(Integer id_producto) {
-        entityManager.remove(entityManager.find(ProductoVo.class, id_producto));
+        Query query = entityManager.createNativeQuery("update productos set status='DELETE' where id_producto=:param", ProductoVo.class);
+        query.setParameter("param", id_producto);        
+        query.executeUpdate();
     }
 
     @Override

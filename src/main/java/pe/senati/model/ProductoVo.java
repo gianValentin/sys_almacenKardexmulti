@@ -5,8 +5,12 @@
  */
 package pe.senati.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +20,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -44,7 +49,7 @@ public class ProductoVo implements Serializable {
     
     @Column
     @DateTimeFormat(pattern = "yyyy-MM-dd",iso = DateTimeFormat.ISO.DATE)
-    private Date fecha_registro;
+    private Date fecha_registro = new Date();
     
     @ManyToOne
     @JoinColumn(
@@ -69,6 +74,10 @@ public class ProductoVo implements Serializable {
             foreignKey = @ForeignKey(foreignKeyDefinition = "foreign key (id_unidad) references unidades (id_unidad)")
     )
     private UnidadVo unidad;  
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "producto")
+    private Collection<kardexVo> itemsKardex = new ArrayList<>();
 
     public ProductoVo() {
     }
@@ -175,12 +184,21 @@ public class ProductoVo implements Serializable {
     }
 
     public void setStatus(String status) {
-        this.status = status;
+        this.status = status.toUpperCase();
     }        
+
+    public Collection<kardexVo> getItemsKardex() {
+        return itemsKardex;
+    }
+
+    public void setItemsKardex(Collection<kardexVo> itemsKardex) {
+        this.itemsKardex = itemsKardex;
+    }
 
     @Override
     public String toString() {
-        return "ProductoVo{" + "id_producto=" + id_producto + ", codigo_producto=" + codigo_producto + ", nombre=" + nombre + ", nombre_reducido=" + nombre_reducido + ", abrev_unidad=" + abrev_unidad + ", fecha_registro=" + fecha_registro + ", tipo=" + tipo + ", categoria=" + categoria + ", unidad=" + unidad + '}';
+        return "ProductoVo{" + "id_producto=" + id_producto + ", codigo_producto=" + codigo_producto + ", nombre=" + nombre + ", nombre_reducido=" + nombre_reducido + ", abrev_unidad=" + abrev_unidad + ", status=" + status + ", fecha_registro=" + fecha_registro + ", tipo=" + tipo + ", categoria=" + categoria + ", unidad=" + unidad + ", itemsKardex=" + itemsKardex + '}';
     }
+    
     
 }

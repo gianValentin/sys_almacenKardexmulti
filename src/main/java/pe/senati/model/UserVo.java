@@ -65,6 +65,10 @@ public class UserVo implements Serializable {
     )
     private Set<RoleVo> itemsRole =new HashSet<RoleVo>();    
     
+    @JsonIgnore
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    private Collection<CategoriaVo> itemsCategoria = new ArrayList<>();
+    
 
     public UserVo() {
     }
@@ -159,5 +163,18 @@ public class UserVo implements Serializable {
     public void setItemsRole(Set<RoleVo> itemsRole) {
         this.itemsRole = itemsRole;
     }        
+
+    public Collection<CategoriaVo> getItemsCategoria() {
+        return itemsCategoria;
+    }
+
+    public void setItemsCategoria(Collection<CategoriaVo> itemsCategoria) {
+        this.itemsCategoria = itemsCategoria;
+    }
+
+    @Override
+    public String toString() {
+        return "UserVo{" + "id_user=" + id_user + ", username=" + username + ", password=" + password + ", nombre=" + nombre + ", apellido=" + apellido + ", fecha_nac=" + fecha_nac + ", estado=" + estado + ", itemsRole=" + itemsRole + ", itemsCategoria=" + itemsCategoria + '}';
+    }
     
 }

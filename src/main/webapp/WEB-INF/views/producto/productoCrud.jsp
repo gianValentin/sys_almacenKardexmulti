@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -54,20 +55,20 @@
                     <div class="col-md-3">
                       <div class="form-group">
                         <label>Categoria</label>
-                        <select class="custom-select" name="categoria.id_categoria" id="cbxCategoria" required>                            
+                        <select class="custom-select cbxCategoria" name="categoria.id_categoria" required tabindex="0">                            
                         </select>
                       </div>
                         
                       <div class="form-group">
                         <label>Tipo Mercaderia</label>
-                        <select class="custom-select" name="tipo.id_tipo" id="cbxTipo" required>
+                        <select class="custom-select cbxTipo" name="tipo.id_tipo" required tabindex="4">
                         </select>
                       </div>
                         
                       <div class="form-group">
                         <div class="row">                          
                           <button type="submit" class="col-md-7 btn btn-primary mr-2">Guardar</button>   
-                          <button type="button" class="col-md-4 btn btn-danger" onclick="$('#add-form').trigger('reset');">Cancelar</button>
+                          <button type="button" class="col-md-4 btn btn-outline-info" onclick="$('#add-form').trigger('reset');">Limpiar</button>
                         </div>               
                       </div>
                         
@@ -76,12 +77,12 @@
                     <div class="col-md-3">
                       <div class="form-group">
                         <label for="txtPrueba">Nombre Del Producto o Articulo</label>
-                        <input type="text" autocomplete="off" class="form-control" id="txtPrueba" name="categoria" placeholder="categoria" required>
+                        <input type="text" autocomplete="off" class="form-control" id="txtPrueba" name="nombre" required tabindex="1">
                       </div>
                         
                       <div class="form-group">
                         <label>Unidad Metrica</label>
-                        <select class="custom-select" name="unidad.id_unidad" id="cbxUnidad" required>
+                        <select class="custom-select cbxUnidad" name="unidad.id_unidad" required tabindex="5">
                         </select>
                       </div>
                         
@@ -90,19 +91,19 @@
                     <div class="col-md-3">
                       <div class="form-group">
                         <label for="txtPrueba">Nombre Reducido Del Producto</label>
-                        <input type="text" autocomplete="off" class="form-control" id="txtPrueba" name="status" placeholder="Nombre Reducido" required>
+                        <input type="text" autocomplete="off" class="form-control" id="txtPrueba" name="nombre_reducido" required tabindex="2">
                       </div>
                         
                       <div class="form-group">
                         <label for="txtPrueba">Abreviatura Unidad</label>
-                        <input type="text" autocomplete="off" class="form-control" id="txtPrueba" name="status" placeholder="Abreviatura Unidad" required>
+                        <input type="text" autocomplete="off" class="form-control" id="txtPrueba" name="abrev_unidad" required tabindex="6">
                       </div>
                     </div> 
                       
                     <div class="col-md-3">
                       <div class="form-group">
                         <label for="txtPrueba">Estado</label>
-                        <select class="custom-select" name="unidad.id_unidad" id="cbxUnidad">
+                        <select class="custom-select" name="status" id="cbxUnidad" tabindex="3">
                             <option value="ACTIVE">Activado</option>
                             <option value="DESACTIVE">Desactivado</option>
                         </select>
@@ -111,7 +112,7 @@
                       <div class="form-group">
                         <label for="txtPrueba">Codigo Producto</label>
                         <div class="input-group">
-                            <input type="text" autocomplete="off" class="form-control" id="txtPrueba" name="Codigo" required readonly>
+                            <input type="text" autocomplete="off" class="form-control readonly" name="codigo_producto" required>
                             <span class="input-group-append">
                                 <button class="btn btn-success btn-flat" type="button" id="btnGenerarCodigo">Generar Auto</button>
                             </span>
@@ -137,6 +138,7 @@
                       <th>Nombre</th>
                       <th>Nombre Reducido</th>
                       <th>Unidad Metrica</th>
+                      <th>Fecha Creacion</th>
                       <th>Estado</th>
                       <th>Editar</th>
                       <th>Eliminar</th>
@@ -167,41 +169,78 @@
         <div class="modal fade" id="editarCategoriaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
+                        <form id="frm-editar">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Editar - Categoria</h5>
+				<h5 class="modal-title" id="exampleModalLabel">Editar - Producto</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 				</button>
-			</div>
+			</div>                        
 			<div class="modal-body">
-				<div class="container">
-					<form id="frm-editar">
-                                            <input type="hidden" name="id_categoria"/>
+				<div class="container">					
+                                            <input type="hidden" name="id_producto"/>
 						<div class="form-group row">
 							<label class="col-sm-3 col-form-label col-form-label-sm">Codigo Categoria:</label>								
 							<div class="col-md-4">
-                                                            <input type="text" class="form-control form-control-sm" placeholder="codigo" name="codigo">
+                                                            <select class="custom-select cbxCategoria" name="categoria.id_categoria" required >                            
+                                                            </select>
 							</div>
 						</div>
 						<div class="form-group row">
-							<label for="txtEditarCategoria" class="col-sm-3 col-form-label col-form-label-sm">Categoria:</label>
+							<label class="col-sm-3 col-form-label col-form-label-sm">Nombre:</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control form-control-sm" placeholder="Categoria" name="categoria">
+								<input type="text" autocomplete="off" class="form-control" id="txtPrueba" name="nombre" required >
 							</div>
 						</div>
 						<div class="form-group row">
-							<label for="txtEditarDescripcion" class="col-sm-3 col-form-label col-form-label-sm">Estado</label>
+							<label class="col-sm-3 col-form-label col-form-label-sm">Nombre Reducido:</label>
 							<div class="col-sm-9">
-                                                            <input type="text" class="form-control form-control-sm" placeholder="Estatus" name="status">
+                                                            <input type="text" autocomplete="off" class="form-control" id="txtPrueba" name="nombre_reducido" required>
 							</div>
 						</div>
-					</form>
+                                                
+                                                <div class="form-group row">
+							<label class="col-sm-3 col-form-label col-form-label-sm">Estado:</label>
+							<div class="col-sm-9">
+                                                            <select class="custom-select" name="status" id="cbxUnidad" tabindex="3">
+                                                                <option value="ACTIVE">Activado</option>
+                                                                <option value="DESACTIVE">Desactivado</option>
+                                                            </select>
+							</div>
+						</div>
+                                                <div class="form-group row">
+							<label class="col-sm-3 col-form-label col-form-label-sm">Tipo Producto:</label>
+							<div class="col-sm-9">
+                                                            <select class="custom-select cbxTipo" name="tipo.id_tipo" required tabindex="4">
+                                                            </select>
+							</div>
+						</div>
+                                                <div class="form-group row">
+							<label class="col-sm-3 col-form-label col-form-label-sm">Unidad Medida:</label>
+							<div class="col-sm-9">
+                                                            <select class="custom-select cbxUnidad" name="unidad.id_unidad" required tabindex="5">
+                                                            </select>
+							</div>
+						</div>
+                                                <div class="form-group row">
+							<label class="col-sm-3 col-form-label col-form-label-sm">Abreviatura Unidad</label>
+							<div class="col-sm-9">
+                                                            <input type="text" autocomplete="off" class="form-control" name="abrev_unidad" required tabindex="6">
+							</div>
+						</div>
+                                                <div class="form-group row">
+							<label class="col-sm-3 col-form-label col-form-label-sm">Codigo Producto</label>
+							<div class="col-sm-9">
+                                                            <input type="text" autocomplete="off" class="form-control readonly" name="codigo_producto" required>
+							</div>
+						</div>                                                                                    
 				</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" id="btnModalEditarCerrar" data-dismiss="modal">Cerrar</button>
-				<button type="button" class="btn btn-success" id="btnModalEditar">Guardar</button>
+				<button type="submit" class="btn btn-success" id="btnModalEditar">Guardar</button>                                
 			</div>
+                        </form>
 			</div>
 		</div>
 	</div>  
@@ -219,13 +258,16 @@
                     $.get("<c:url value="/findAllProducto"/>",function(response){                                                		
                         //const usuarios = JSON.parse(response);                        
 			let template = '';
-			response.forEach(producto => {                            
+			response.forEach(producto => { 
+                        var dateGenerado = new Date(producto.fecha_registro);
+                        var dateGeneradoFormat = dateGenerado.getDate() + "-" + (dateGenerado.getMonth() + 1) + "-" + dateGenerado.getFullYear();
 			template += `
-                            <tr categoriaId="`+producto.id_producto+`">	
+                            <tr id_objeto="`+producto.id_producto+`">	
                                     <td>`+producto.codigo_producto+`</td>
                                     <td>`+producto.nombre+`</td>
                                     <td>`+producto.nombre_reducido+`</td>
-                                    <td>`+producto.abrev_unidad+`</td>                                                                        
+                                    <td>`+producto.abrev_unidad+`</td>                                       
+                                    <td>`+dateGeneradoFormat+`</td>       
                                     <td> <input type="checkbox"  name="vehicle3" value="Boat" checked> `+producto.status+`</td>
                                     <td><button class="btnEditar btn btn-outline-success" data-toggle="modal" data-target="#editarCategoriaModal">Editar</button></td>
                                     <td><button class="btnEliminar btn btn-outline-danger">Eliminar</button></td>
@@ -247,7 +289,7 @@
                                 <option value="`+categoria.id_categoria+`">`+categoria.categoria+`</option>
                             `;
 			});			                        
-                        $('#cbxCategoria').html(template);                                                
+                        $('.cbxCategoria').html(template);                                                
                     });
                     
                     $.get("<c:url value="/findAllTipo"/>",function(response){                                                		
@@ -258,7 +300,7 @@
                                 <option value="`+tipo.id_tipo+`">`+tipo.tipo+`</option>
                             `;
 			});			                        
-                        $('#cbxTipo').html(template);                                                
+                        $('.cbxTipo').html(template);                                                
                     });
                     
                     $.get("<c:url value="/findAllUnidad"/>",function(response){                                                		
@@ -269,7 +311,7 @@
                                 <option value="`+unidad.id_unidad+`">`+unidad.unidad+`</option>
                             `;
 			});			                        
-                        $('#cbxUnidad').html(template);                                                
+                        $('.cbxUnidad').html(template);                                                
                     });
                 }
                 //Agregar
@@ -277,7 +319,7 @@
                     e.preventDefault();                                     
                     var datos=$('#add-form').serializeArray();                                                            
                     datos.push({name:'${_csrf.parameterName}',value:'${_csrf.token}'});
-                    
+                    console.log(datos);
                     $.ajax({
                         type : "POST",
                          url : "<c:url value="/insertProducto"/>",
@@ -292,25 +334,31 @@
                 $(document).on('click', '.btnEditar', (e) => {
                     var jsondata={};
                     const element = $(this)[0].activeElement.parentElement.parentElement;
-                    const id = $(element).attr('categoriaId');                        
+                    const id = $(element).attr('id_objeto');                        
                     const csrfParameter = '${_csrf.parameterName}';
                     const csrfToken = '${_csrf.token}';                        
-                    jsondata['id_categoria'] = id;
+                    jsondata['id_producto'] = id;
                     jsondata[csrfParameter]=csrfToken; 
-                    $.post("<c:url value="/findIdCategoria"/>",jsondata,(response)=>{
+                    $.post("<c:url value="/findIdProducto"/>",jsondata,(response)=>{
                         console.log(response);
                         if(response!=null){
-                            $('input[name="id_categoria"]','#frm-editar').val(response.id_categoria);                            			
-                            $('input[name="codigo"]','#frm-editar').val(response.codigo);                            			
-                            $('input[name="categoria"]','#frm-editar').val(response.categoria);                            			
-                            $('input[name="status"]','#frm-editar').val(response.status);                            			
+                            $('input[name="id_producto"]','#frm-editar').val(response.id_producto);                            			
+                            $('input[name="codigo_producto"]','#frm-editar').val(response.codigo_producto);                            			
+                            $('input[name="nombre"]','#frm-editar').val(response.nombre);                            			
+                            $('input[name="nombre_reducido"]','#frm-editar').val(response.nombre_reducido);
+                            $('input[name="abrev_unidad"]','#frm-editar').val(response.abrev_unidad);
+                            $('input[name="status"]','#frm-editar').val(response.status);
+                            $('input[name="fecha_registro"]','#frm-editar').val(response.fecha_registro);
+                            $('select[name="tipo.id_tipo"]','#frm-editar').val(response.tipo.id_tipo);
+                            $('select[name="categoria.id_categoria"]','#frm-editar').val(response.categoria.id_categoria);
+                            $('select[name="unidad.id_unidad"]','#frm-editar').val(response.unidad.id_unidad);
                         }
                     });		
                     idProducto=id;
                 });
                 
-                $('#btnModalEditar').click(function(){
-                      
+                $('#frm-editar').submit(function(e){
+                        e.preventDefault();  
                         var datos=$('#frm-editar').serializeArray(); 
                         console.log(datos);
                         datos.push({name:'${_csrf.parameterName}',value:'${_csrf.token}'});
@@ -329,10 +377,10 @@
                     if(confirm('Estas seguro de Eliminar este Producto?')) {
                         var jsondata={};
                         const element = $(this)[0].activeElement.parentElement.parentElement;
-                        const id = $(element).attr('categoriaId');                        
+                        const id = $(element).attr('id_objeto');                        
                         const csrfParameter = '${_csrf.parameterName}';
                         const csrfToken = '${_csrf.token}';                        
-                        jsondata['id_categoria'] = id;
+                        jsondata['id_producto'] = id;
                         jsondata[csrfParameter]=csrfToken;                                                
                         $.post('<c:url value="/deleteProducto"/>', jsondata,(response) => {                            
                             findAll();
@@ -344,9 +392,19 @@
                 $(document).on('click', '#btnGenerarCodigo', (e) => {
                     $.get("<c:url value="/nuevoCodigo"/>",(response)=>{
                         console.log(response);
-                        $('input[name="Codigo"]','#add-form').val(response);                            			
+                        $('input[name="codigo_producto"]','#add-form').val(response);                            			
                     });
                 });
+                
+                
+                //TOOLS
+                $(".readonly").keydown(function(e){
+                    e.preventDefault();
+                }); 
+                
+                function optionExists(component,val) {
+                    return $("#mySelect option[value='" + val + "']").length !== 0;
+                }
     });
 </script>
 

@@ -5,12 +5,14 @@
  */
 package pe.senati.controller;
 
+import java.security.Principal;
 import java.util.Collection;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import pe.senati.model.CategoriaVo;
 import pe.senati.service.CategoriaService;
+import pe.senati.service.UserService;
 
 @Controller
 public class CategoriaController {
@@ -27,6 +30,10 @@ public class CategoriaController {
     @Autowired
     @Qualifier("categoriaServiceImpl")
     private CategoriaService categoriaService;
+    
+    @Autowired
+    @Qualifier("userServiceImpl")
+    private UserService userService;
     
     
     @RequestMapping(value = "/categoriaCrud",method = RequestMethod.GET)
@@ -43,8 +50,8 @@ public class CategoriaController {
     
     @PostMapping(value = "/insertCategoria")    
     @ResponseBody
-    public String insertCategoria_post(CategoriaVo categoriaVo){
-        System.out.println(categoriaVo);
+    public String insertCategoria_post(CategoriaVo categoriaVo,Authentication auth){
+        categoriaVo.setUser(userService.findByUsername(auth.getName()));        
         categoriaService.insert(categoriaVo);
         return "OK";        
     }
@@ -52,8 +59,7 @@ public class CategoriaController {
     @PostMapping(value = "/deleteCategoria")    
     @ResponseBody
     public String eliminarCategoria_post(HttpServletRequest request){    
-        Integer id_categoria= Integer.parseInt(request.getParameter("id_categoria"));
-        System.out.println(id_categoria);
+        Integer id_categoria= Integer.parseInt(request.getParameter("id_categoria"));        
         categoriaService.delete(id_categoria);
         return "OK";        
     }

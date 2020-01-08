@@ -12,9 +12,12 @@ import java.util.Collection;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -37,7 +40,15 @@ public class CategoriaVo implements Serializable {
     
     @JsonIgnore
     @OneToMany(mappedBy = "categoria")
-    private Collection<ProductoVo> itemsCategoria = new ArrayList<>();
+    private Collection<ProductoVo> itemsProducto = new ArrayList<>();
+    
+    @ManyToOne
+    @JoinColumn(
+            name = "id_user",
+            nullable = false,            
+            foreignKey = @ForeignKey(foreignKeyDefinition = "foreign key (id_user) references users (id_user)")
+    )
+    private UserVo user;
 
     public CategoriaVo() {
     }
@@ -83,12 +94,12 @@ public class CategoriaVo implements Serializable {
         this.categoria = categoria.toUpperCase();
     }
 
-    public Collection<ProductoVo> getItemsCategoria() {
-        return itemsCategoria;
+    public Collection<ProductoVo> getItemsProducto() {
+        return itemsProducto;
     }
 
-    public void setItemsCategoria(Collection<ProductoVo> itemsCategoria) {
-        this.itemsCategoria = itemsCategoria;
+    public void setItemsProducto(Collection<ProductoVo> itemsProducto) {
+        this.itemsProducto = itemsProducto;
     }
 
     public String getStatus() {
@@ -107,9 +118,20 @@ public class CategoriaVo implements Serializable {
         this.codigo = codigo.toUpperCase();
     }        
 
+    public UserVo getUser() {
+        return user;
+    }
+
+    public void setUser(UserVo user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
-        return "CategoriaVo{" + "id_categoria=" + id_categoria + ", codigo=" + codigo + ", categoria=" + categoria + ", status=" + status + ", itemsCategoria=" + itemsCategoria + '}';
-    }   
+        return "CategoriaVo{" + "id_categoria=" + id_categoria + ", codigo=" + codigo + ", categoria=" + categoria + ", status=" + status + ", itemsProducto=" + itemsProducto + ", user=" + user + '}';
+    }
+
+ 
+    
    
 }
