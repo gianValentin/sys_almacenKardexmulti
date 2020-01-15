@@ -1,7 +1,11 @@
 
 package pe.senati.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -15,7 +19,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "kardex")
-public class kardexVo {
+public class kardexVo implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +36,10 @@ public class kardexVo {
     
     @Column
     private Double precio_venta;
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "id.kardexVo")
+    private Set<Detalle_EntradaVo> itemsDetalle = new HashSet<>();
     
     @ManyToOne
     @JoinColumn(
@@ -116,6 +124,15 @@ public class kardexVo {
     public void setProducto(ProductoVo producto) {
         this.producto = producto;
     }
+
+    public Set<Detalle_EntradaVo> getItemsDetalle() {
+        return itemsDetalle;
+    }
+
+    public void setItemsDetalle(Set<Detalle_EntradaVo> itemsDetalle) {
+        this.itemsDetalle = itemsDetalle;
+    }
+    
 
     @Override
     public String toString() {

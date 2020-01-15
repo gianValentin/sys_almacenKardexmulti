@@ -3,10 +3,10 @@ package pe.senati.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,7 +32,12 @@ public class EntradaVo implements Serializable {
     private String factura;
     
     @Column
-    private Date fecha_factura;    
+    @DateTimeFormat(pattern = "yyyy-MM-dd",iso = DateTimeFormat.ISO.DATE)
+    private Date fecha_factura;   
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "id.entradaVo")
+    private Set<Detalle_EntradaVo> itemsDetalle = new HashSet<>();
 
     public EntradaVo() {
     }
@@ -94,6 +99,14 @@ public class EntradaVo implements Serializable {
         this.fecha_factura = fecha_factura;
     }
 
+    public Set<Detalle_EntradaVo> getItemsDetalle() {
+        return itemsDetalle;
+    }
+
+    public void setItemsDetalle(Set<Detalle_EntradaVo> itemsDetalle) {
+        this.itemsDetalle = itemsDetalle;
+    }
+    
     @Override
     public String toString() {
         return "EntradaVo{" + "id_entradaM=" + id_entradaM + ", fecha_entrada=" + fecha_entrada + ", factura=" + factura + ", fecha_factura=" + fecha_factura + '}';

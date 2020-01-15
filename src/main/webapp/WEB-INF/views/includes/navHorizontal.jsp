@@ -276,7 +276,15 @@
               </li>
             </ul>
           </li>
-         
+          <li class="nav-header">Session</li>
+          <li class="nav-item">
+            <a href="<c:url value="/logout"/>" class="nav-link">
+              <i class="nav-icon fas fa-backspace"></i>
+              <p>
+                Cerrar Session                
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
