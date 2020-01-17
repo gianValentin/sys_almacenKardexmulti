@@ -3,7 +3,6 @@ package pe.senati.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.awt.ItemSelectable;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
@@ -16,10 +15,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import pe.senati.model.Detalle_EntradaVo;
+import pe.senati.model.Detalle_Entrada_ID;
 import pe.senati.model.EntradaVo;
 import pe.senati.model.ProductoVo;
 import pe.senati.model.jsonDetalleEntrada;
 import pe.senati.model.kardexVo;
+import pe.senati.service.Detalle_EntradaService;
 import pe.senati.service.EntradaService;
 import pe.senati.service.KardexService;
 
@@ -34,6 +35,10 @@ public class EntradasController {
     @Qualifier("entradaServiceImpl")
     private EntradaService entradaService;
     
+    @Autowired
+    @Qualifier("detalle_EntradaServiceImpl")
+    private Detalle_EntradaService detalle_EntradaService;
+    
     @GetMapping(value = "/entrada")
     public String entradaMercaderia_get(){
         return "/kardex/entrada";
@@ -43,11 +48,12 @@ public class EntradasController {
     @ResponseBody
     public Boolean createEntrada_post(EntradaVo entradaVo,HttpServletRequest request) throws IOException{
         
+        
         ObjectMapper objectMapper = new ObjectMapper();
         
         //pasar json a Colleccion
         Collection<jsonDetalleEntrada> detalles = objectMapper.readValue(request.getParameter("json"),new TypeReference<Collection<jsonDetalleEntrada>>(){} );                                    
-        //crear entrada
+        //CREAR ENTRADA
         entradaService.Insert(entradaVo);
         entradaVo = entradaService.findNewInsert();
         
@@ -64,21 +70,30 @@ public class EntradasController {
             kardexVo.setProducto(productoVo);
             kardexVo.setStock_anterior(stock_anterior);
             kardexVo.setStock_actual(stock_anterior+json.getCantidad());           
-            
-            
-           /* Detalle_EntradaVo detalle_Entrada = new Detalle_EntradaVo();
-            detalle_Entrada.setCantidad();
-            detalle_Entrada.setPrecio(Double.NaN);
-            
+                       
+           
             Set<Detalle_EntradaVo> itemsDetalle = new HashSet<>();
-            itemsDetalle.add();
+           
             
-            kardexVo.setItemsDetalle(itemsDetalle);*/
+            kardexVo.setItemsDetalle(itemsDetalle);
             
-            kardexService.insert(kardexVo);                                    
+            //CREAR KARDEX
+            kardexService.insert(kardexVo);   
+            kardexVo = kardexService.findNewInsert();
             
-        }
+            // CREAR EL IDs DETALLE
+            Detalle_Entrada_ID detalle_Entrada_Id = new Detalle_Entrada_ID();
+            detalle_Entrada_Id.setEntradaVo(entradaVo);
+            detalle_Entrada_Id.setKardexVo(kardexVo);
             
+            //CREAR DETALLE
+            Detalle_EntradaVo detalle_Entrada = new Detalle_EntradaVo();
+            detalle_Entrada.setCantidad(json.getCantidad());
+            detalle_Entrada.setPrecio(json.getPrecio());
+            detalle_Entrada.setId(detalle_Entrada_Id);            
+            detalle_EntradaService.insert(detalle_Entrada);
+            
+        }            
         
         return true;
     }

@@ -34,7 +34,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="<c:url value="/categoriaCrud"/>" class="nav-link">              
+            <a href="<c:url value="/salida"/>" class="nav-link">              
               <i class="nav-icon fas fa-sign-out-alt"></i>
               <p>
                 Salida Mercaderia                

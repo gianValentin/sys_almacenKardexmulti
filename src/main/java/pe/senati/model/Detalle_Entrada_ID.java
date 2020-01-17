@@ -66,6 +66,11 @@ public class Detalle_Entrada_ID implements Serializable {
     public void setEntradaVo(EntradaVo entradaVo) {
         this.entradaVo = entradaVo;
     }
+
+    @Override
+    public String toString() {
+        return "Detalle_Entrada_ID{" + "kardexVo=" + kardexVo + ", entradaVo=" + entradaVo + '}';
+    }
     
        
 }

@@ -1,5 +1,6 @@
 package pe.senati.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.AssociationOverride;
 import javax.persistence.AssociationOverrides;
@@ -20,10 +21,10 @@ import javax.persistence.Table;
             joinColumns = @JoinColumn(name = "id_entrada"),
             foreignKey = @ForeignKey(foreignKeyDefinition = "foreign key (id_entrada) references entradas(id_entrada)"))
 })
-public class Detalle_EntradaVo {
+public class Detalle_EntradaVo implements Serializable {
     
     @EmbeddedId
-    private Detalle_Entrada_ID id =new Detalle_Entrada_ID();
+    private Detalle_Entrada_ID id = new Detalle_Entrada_ID();
     
     @Column
     private Integer cantidad;
@@ -81,6 +82,11 @@ public class Detalle_EntradaVo {
 
     public void setPrecio(Double precio) {
         this.precio = precio;
+    }
+
+    @Override
+    public String toString() {
+        return "Detalle_EntradaVo{" + "id=" + id + ", cantidad=" + cantidad + ", precio=" + precio + '}';
     }
     
     

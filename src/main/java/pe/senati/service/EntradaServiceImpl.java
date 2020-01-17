@@ -20,13 +20,13 @@ public class EntradaServiceImpl implements EntradaService{
     private EntradaDao entradaDao;
     
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = false)
     public void Insert(EntradaVo entradaVo) {
         entradaDao.Insert(entradaVo);
     }
 
     @Override
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = true)
     public EntradaVo findNewInsert() {
         return entradaDao.findNewInsert();
     }

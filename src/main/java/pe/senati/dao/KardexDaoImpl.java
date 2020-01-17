@@ -31,5 +31,11 @@ public class KardexDaoImpl implements KardexDao{
     public void insert(kardexVo kardexVo) {
         entityManager.persist(kardexVo);
     }
+
+    @Override
+    public kardexVo findNewInsert() {
+        Query query = entityManager.createNativeQuery("select * from kardex order by id_kardex desc limit 1",kardexVo.class);
+        return (kardexVo)query.getSingleResult();
+    }
     
 }

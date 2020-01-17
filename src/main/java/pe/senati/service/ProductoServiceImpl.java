@@ -58,12 +58,14 @@ public class ProductoServiceImpl implements ProductoService{
     }
 
     @Override
-    public String getCodigoTop() {
+    public String getCodigoTop(String Username) {
         String codigo = productoDao.getCodigoTop();
+        
+        String iniUsername = Username.substring(0, 2).toUpperCase();
         if(Objects.equals(null, codigo))
-            codigo="P0001";
+            codigo = iniUsername+"P0001";
        else
-            codigo="P"+String.format("%04d",(Integer.parseInt(codigo.substring(1))+1));   
+            codigo = iniUsername+"P"+String.format("%04d",(Integer.parseInt(codigo.substring(1))+1));   
         return codigo;
     }
        

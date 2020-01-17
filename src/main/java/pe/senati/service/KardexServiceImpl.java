@@ -26,5 +26,11 @@ public class KardexServiceImpl implements KardexService{
     public Integer findStockFindIdProducto(Integer id_producto) {
         return kardexDao.findStockFindIdProducto(id_producto);
     }   
+
+    @Override
+    @Transactional(readOnly = true)
+    public kardexVo findNewInsert() {
+        return kardexDao.findNewInsert();
+    }
     
 }

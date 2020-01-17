@@ -19,5 +19,5 @@ public interface ProductoService {
     public abstract Collection<ProductoVo> findByNombre(String nombre);
     public abstract ProductoVo findById(Integer id_producto);
     
-    public abstract String getCodigoTop();
+    public abstract String getCodigoTop(String username);
 }
