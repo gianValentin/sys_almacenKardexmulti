@@ -20,7 +20,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Salida de Mercaderia</h1>
+            <h1 class="m-0 text-success">Salida de Mercaderia</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">              
@@ -44,91 +44,36 @@
           <section class="col-lg-4 connectedSortable">            
               <div class="card card-secondary">
               <div class="card-header">
-                <h3 class="card-title">Formulario de Entrada</h3>
+                <h3 class="card-title">Busqueda de Productos</h3>
               </div>
               <div class="card-body">
                   <form id="frm-entrada">
                     <div class="form-group row">
-                        <label class="col-sm-3 col-form-label"> n° Factura</label>
-                        <div class="col-sm-9">
-                            <input type="text" autocomplete="off" name="factura" class="form-control form-group-sm is-warning" required>
+                        <label class="col-sm-4 col-form-label">Producto:</label>
+                        <div class="col-sm-8">
+                            <input type="text" autocomplete="off" name="factura" class="form-control form-group-sm is-warning" placeholder="Nombre,Abreviatura,Codigo,Categiria" required>
                         </div>
+                    </div>                    
+                    <hr>                                                              
+                    <div class="row">
+                        <table class="table table-bordered table-hover table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Codigo</th>
+                                    <th>Nombre</th>
+                                    <th>Nombre Reducido</th>
+                                    <th>Precio</th>
+                                    <th>Stock</th>
+                                    <th>Seleccionar</th>
+                                </tr>
+                            </thead>
+                            <tbody id="lstBusquedaProducto">                                
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label"> Fecha Factura</label>
-                        <div class="col-sm-4">
-                            <input type="date" autocomplete="off" name="fecha_factura" class="form-control form-group-sm is-warning" required>
-                        </div>
-                    </div>  
-                      <hr>
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label"> Cod Producto</label>
-                        <div class="col-sm-4 input-group">
-                            <input type="hidden" name="id_producto" />
-                            <input type="text" autocomplete="off" name="codigo_producto" class="form-control form-group-sm readonly" required>
-                            <span class="input-group-append">
-                                <button type="button" id="btnBuscarProducto" class="btn btn-outline-warning" ><i class="fas fa-search"></i></button>
-                            </span>
-                        </div>
-                        <label class="col-sm-2 col-form-label"> Stock</label>
-                        <div class="col-sm-3">
-                            <input type="text" autocomplete="off" name="stock" class="form-control form-group-sm readonly">
-                        </div>
-                    </div>
-                      
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Nombre</label>
-                        <div class="col-sm-9">
-                            <input type="text" autocomplete="off" name="nombre" class="form-control form-group-sm readonly">
-                        </div>
-                    </div>
-                    
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Cantidad</label>
-                        <div class="col-sm-3">
-                            <input type="number" step=".01" autocomplete="off" name="cantidad" class="form-control form-group-sm is-warning" onkeypress="return isNumberKey(event)" onkeyup="calcularValorVenta(event)" required>
-                        </div>
-                        <label class="col-sm-3 col-form-label">Unidad Metrica</label>
-                        <div class="col-sm-3">
-                            <input type="text" autocomplete="off" name="unidad.unidad" class="form-control form-group-sm readonly">
-                        </div>
-                    </div>
-                    
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Valor Unitario</label>
-                        <div class="col-sm-3">
-                            <input type="number" step=".01" autocomplete="off" name="valor_unitario" class="form-control form-group-sm is-warning" onkeypress="return isNumberKey(event)" onkeyup="calcularValorVenta(event)" required>
-                        </div>
-                    </div>  
-                    
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Valor Venta</label>
-                        <div class="col-sm-3">
-                            <input type="text" autocomplete="off" name="valor_venta" class="form-control form-group-sm readonly">
-                        </div>
-                    </div>  
-                    <hr>
-                    <div class="row">                                                
-                        <button type="submit" class="btn btn-secondary col-sm-4 offset-sm-5" >Ingresar Detalle</button>                                                
-                        <button type="button" class="btn btn-outline-info col-sm-3">Limpiar</button>                        
-                    </div>                      
-                    
                 </form>
               </div>
-            </div>   
-              
-            <div class="card card-secondary">              
-              <div class="card-body">
-                <div class="row">        
-                    <div class="col-md-6">
-                        <button type="button" class="btn btn-primary row col-12" id="btnGuardarIngreso">Guardar Ingreso</button>                       
-                    </div>
-                    <div class="col-md-6">
-                        <button type="button" class="btn btn-outline-danger row col-12" >Cancelar</button>                        
-                    </div>                                        
-                </div> 
-              </div>
-            </div>   
+            </div>      
           </section>
           
           <section class="col-lg-8">
@@ -155,7 +100,7 @@
                 </div>
             </div>
             <div class="row justify-content-end">
-                <div class="card card-secondary col-md-4">
+                <div class="card col-md-4">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6">IGV:</div>
@@ -172,6 +117,15 @@
                     </div>
                 </div>
             </div>
+            <div class="row justify-content-end">
+                <div class="card col-md-4">
+                    <div class="card-body">
+                        <div class="row">                            
+                            <button class="col-md-12 btn btn-success" type="button">Finalizar</button>                                  
+                        </div>                      
+                    </div>
+                </div>
+            </div>
           </section>
           <!-- right col -->
         </div>
@@ -184,32 +138,7 @@
   <%@include file="../includes/footer.jsp" %>
 
 
-</div>
-        <div class="modal fade" id="buscarProductoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">                        
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Editar - Producto</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        </div>                        
-                        <div class="modal-body">
-                            <div class="container">					
-                                <table id="tablaProductosModal" class="table table-bordered table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Codigo</th>
-                                            <th>Nombre</th>
-                                            <th>Selecccionar</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="lstProductoModal">                                            
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>                        
-                    </div>
-		</div>
-	</div>  
+</div> 
   <%@include file="../includes/scripts.jsp" %>
   <!-- ./table -->
     <script src="<c:url value="public/plugins/datatables/jquery.dataTables.js" />"></script>

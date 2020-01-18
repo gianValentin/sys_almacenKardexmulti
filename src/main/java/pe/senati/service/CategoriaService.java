@@ -17,6 +17,6 @@ public interface CategoriaService {
     public abstract void update(CategoriaVo categoriaVo);
     public abstract void delete(Integer id_categoria);
     
-    public abstract Collection<CategoriaVo> findAll();
+    public abstract Collection<CategoriaVo> findAll(String Username);
     public abstract CategoriaVo findById(Integer id_categoria);
 }

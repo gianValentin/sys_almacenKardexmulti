@@ -35,8 +35,8 @@ public class ProductoController {
     
     @RequestMapping(value = "/findAllProducto",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Collection<ProductoVo> findAllProducto_get(){        
-        return productoService.findAll();
+    public Collection<ProductoVo> findAllProducto_get(Authentication auth){        
+        return productoService.findAll(auth.getName());
     }
     
     @PostMapping(value = "/insertProducto",produces = MediaType.APPLICATION_JSON_VALUE)    

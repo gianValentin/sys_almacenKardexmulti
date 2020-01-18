@@ -40,8 +40,8 @@ public class CategoriaServiceImpl implements CategoriaService{
 
     @Override
     @Transactional(readOnly = true)
-    public Collection<CategoriaVo> findAll() {
-        return categoriaDao.findAll();
+    public Collection<CategoriaVo> findAll(String Username) {
+        return categoriaDao.findAll(Username);
     }
 
     @Override

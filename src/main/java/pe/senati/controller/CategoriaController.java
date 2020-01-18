@@ -43,9 +43,9 @@ public class CategoriaController {
     
     @RequestMapping(value = "/findAllCategoria",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Collection<CategoriaVo> findAllCategoria_get(){
         
-        return categoriaService.findAll();
+    public Collection<CategoriaVo> findAllCategoria_get(Authentication auth){        
+        return categoriaService.findAll(auth.getName());
     }
     
     @PostMapping(value = "/insertCategoria")    

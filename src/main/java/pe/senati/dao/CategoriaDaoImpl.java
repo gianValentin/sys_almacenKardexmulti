@@ -36,8 +36,12 @@ public class CategoriaDaoImpl implements CategoriaDao{
     }
 
     @Override
-    public Collection<CategoriaVo> findAll() {
-        Query query=entityManager.createNativeQuery("select * from categorias where status!='DELETE'",CategoriaVo.class);
+    public Collection<CategoriaVo> findAll(String Username) {
+        String consulta="select c.* from categorias c " +                        
+                        "inner join users u on u.id_user = c.id_user "+
+                        "where c.status!='DELETE' and u.username =:param";
+        Query query=entityManager.createNativeQuery(consulta,CategoriaVo.class);
+        query.setParameter("param", Username);
         return query.getResultList();
     }
 

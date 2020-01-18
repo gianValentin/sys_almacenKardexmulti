@@ -38,8 +38,13 @@ public class ProductoDaoImpl implements ProductoDao{
     }
 
     @Override
-    public Collection<ProductoVo> findAll() {
-        Query query = entityManager.createNativeQuery("select * from productos where status!='DELETE'", ProductoVo.class);
+    public Collection<ProductoVo> findAll(String Username) {
+        String consulta="select p.* from productos p " +
+                        "inner join categorias c on c.id_categoria = p.id_categoria " +
+                        "inner join users u on u.id_user = c.id_user "+
+                        "where p.status!='DELETE' and u.username =:param";
+        Query query = entityManager.createNativeQuery(consulta, ProductoVo.class);
+        query.setParameter("param", Username);
         return query.getResultList();
     }
 
@@ -49,7 +54,7 @@ public class ProductoDaoImpl implements ProductoDao{
     }
 
     @Override
-    public Collection<ProductoVo> findByNombre(String nombre) {
+    public Collection<ProductoVo> findByNombre(String nombre) {        
         Query query = entityManager.createNativeQuery("select * from productos where nombre_comercial like :param1 or nombre_generico like :param2", ProductoVo.class);
         query.setParameter("param1", nombre+"%");
         query.setParameter("param2", nombre+"%");
@@ -57,8 +62,15 @@ public class ProductoDaoImpl implements ProductoDao{
     }
 
     @Override
-    public String getCodigoTop() {
-        Query query = entityManager.createNativeQuery("select codigo_producto from productos order by codigo_producto desc limit 1");
+    public String getCodigoTop(String Username) {
+        String consulta="select p.codigo_producto from productos p " +
+                        "inner join categorias c on c.id_categoria = p.id_categoria " +
+                        "inner join users u on u.id_user = c.id_user " +
+                        "where u.username =:param " +
+                        "order by p.codigo_producto desc limit 1";
+        
+        Query query = entityManager.createNativeQuery(consulta);
+        query.setParameter("param", Username);
         String codigo=null;
         try{
             codigo = (String)query.getSingleResult();

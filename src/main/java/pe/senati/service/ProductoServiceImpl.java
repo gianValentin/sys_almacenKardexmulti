@@ -41,8 +41,8 @@ public class ProductoServiceImpl implements ProductoService{
 
     @Override
     @Transactional(readOnly = true)
-    public Collection<ProductoVo> findAll() {
-        return productoDao.findAll();
+    public Collection<ProductoVo> findAll(String Username) {
+        return productoDao.findAll(Username);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class ProductoServiceImpl implements ProductoService{
 
     @Override
     public String getCodigoTop(String Username) {
-        String codigo = productoDao.getCodigoTop();
+        String codigo = productoDao.getCodigoTop(Username);
         
         String iniUsername = Username.substring(0, 2).toUpperCase();
         if(Objects.equals(null, codigo))

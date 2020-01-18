@@ -15,7 +15,7 @@ public interface ProductoService {
     public abstract void update(ProductoVo productoVo);
     public abstract void delete(Integer id_producto);
     
-    public abstract Collection<ProductoVo> findAll();
+    public abstract Collection<ProductoVo> findAll(String Username);
     public abstract Collection<ProductoVo> findByNombre(String nombre);
     public abstract ProductoVo findById(Integer id_producto);
     
