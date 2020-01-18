@@ -7,6 +7,7 @@ package pe.senati.dao;
 
 import java.util.Collection;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
@@ -48,6 +49,23 @@ public class CategoriaDaoImpl implements CategoriaDao{
     @Override
     public CategoriaVo findById(Integer id_categoria) {
         return entityManager.find(CategoriaVo.class, id_categoria);
+    }
+
+    @Override
+    public String getCodigoTop(String Username) {
+        String consulta="select c.codigo from categorias c " +
+                        "inner join users u on u.id_user = c.id_user " +
+                        "where u.username =:param " +
+                        "order by c.codigo desc limit 1";
+        
+        Query query = entityManager.createNativeQuery(consulta);
+        query.setParameter("param", Username);
+        String codigo=null;
+        try{
+            codigo = (String)query.getSingleResult();
+        }catch(NoResultException ex){
+        }
+        return codigo;
     }
     
     

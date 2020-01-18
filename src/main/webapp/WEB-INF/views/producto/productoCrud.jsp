@@ -390,7 +390,7 @@
                 
                 //Obtener Nuevo Codigo
                 $(document).on('click', '#btnGenerarCodigo', (e) => {
-                    $.get("<c:url value="/nuevoCodigo"/>",(response)=>{
+                    $.get("<c:url value="/nuevoCodigoProducto"/>",(response)=>{
                         console.log(response);
                         $('input[name="codigo_producto"]','#add-form').val(response);                            			
                     });

@@ -58,6 +58,7 @@ public class ProductoServiceImpl implements ProductoService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public String getCodigoTop(String Username) {
         String codigo = productoDao.getCodigoTop(Username);
         
@@ -65,7 +66,7 @@ public class ProductoServiceImpl implements ProductoService{
         if(Objects.equals(null, codigo))
             codigo = iniUsername+"P0001";
        else
-            codigo = iniUsername+"P"+String.format("%04d",(Integer.parseInt(codigo.substring(1))+1));   
+            codigo = iniUsername+"P"+String.format("%04d",(Integer.parseInt(codigo.substring(3))+1));   
         return codigo;
     }
        

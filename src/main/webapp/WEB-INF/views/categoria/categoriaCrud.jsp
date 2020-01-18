@@ -55,7 +55,12 @@
                     <div class="col-md-3">
                       <div class="form-group">
                         <label for="txtPrueba">Codigo Categoria</label>
-                        <input type="text" autocomplete="off" class="form-control" id="txtPrueba" name="codigo" placeholder="Codigo Categoria" required>
+                        <div class="input-group">
+                            <input type="text" autocomplete="off" class="form-control readonly" name="codigo" required>
+                            <span class="input-group-append">
+                                <button class="btn btn-success btn-flat" type="button" id="btnGenerarCodigo">Generar Auto</button>
+                            </span>
+                        </div> 
                       </div>
                         
                       <div class="form-group">
@@ -269,9 +274,18 @@
                     }
                 });
                 
-                     
-         
-     
+                //Obtener Nuevo Codigo
+                $(document).on('click', '#btnGenerarCodigo', (e) => {
+                    $.get("<c:url value="/nuevoCodigoCategoria"/>",(response)=>{
+                        console.log(response);
+                        $('input[name="codigo"]','#add-form').val(response);                            			
+                    });
+                }); 
+                
+                //TOOLS
+                $(".readonly").keydown(function(e){
+                    e.preventDefault();
+                });      
  });
 </script>
 

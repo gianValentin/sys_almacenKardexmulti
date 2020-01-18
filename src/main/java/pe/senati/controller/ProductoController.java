@@ -75,9 +75,9 @@ public class ProductoController {
         return productoVo;        
     }
     
-    @GetMapping(value = "/nuevoCodigo")
+    @GetMapping(value = "/nuevoCodigoProducto")
     @ResponseBody
-    public String nuevoCodigo(Authentication auth){        
+    public String nuevoCodigoProducto_get(Authentication auth){        
         return productoService.getCodigoTop(auth.getName());
     }
 }

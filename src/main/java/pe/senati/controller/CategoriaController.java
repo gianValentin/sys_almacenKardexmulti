@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,7 +44,6 @@ public class CategoriaController {
     
     @RequestMapping(value = "/findAllCategoria",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-        
     public Collection<CategoriaVo> findAllCategoria_get(Authentication auth){        
         return categoriaService.findAll(auth.getName());
     }
@@ -77,6 +77,12 @@ public class CategoriaController {
         Integer id_categoria= Integer.parseInt(request.getParameter("id_categoria"));
         CategoriaVo categoriaVo=categoriaService.findById(id_categoria);
         return categoriaVo;        
+    }
+    
+    @GetMapping(value = "/nuevoCodigoCategoria")
+    @ResponseBody
+    public String nuevoCodigoCategoria_get(Authentication auth){
+        return categoriaService.getCodigoTop(auth.getName());
     }
     
 }

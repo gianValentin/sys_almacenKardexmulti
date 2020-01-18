@@ -69,13 +69,9 @@ public class EntradasController {
             kardexVo kardexVo = new kardexVo();
             kardexVo.setProducto(productoVo);
             kardexVo.setStock_anterior(stock_anterior);
-            kardexVo.setStock_actual(stock_anterior+json.getCantidad());           
-                       
-           
-            Set<Detalle_EntradaVo> itemsDetalle = new HashSet<>();
-           
+            kardexVo.setStock_actual(stock_anterior+json.getCantidad());                                  
             
-            kardexVo.setItemsDetalle(itemsDetalle);
+            kardexVo.setPrecio_venta(json.getPrecio());
             
             //CREAR KARDEX
             kardexService.insert(kardexVo);   

@@ -6,6 +6,7 @@
 package pe.senati.service;
 
 import java.util.Collection;
+import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -48,6 +49,18 @@ public class CategoriaServiceImpl implements CategoriaService{
     @Transactional(readOnly = true)
     public CategoriaVo findById(Integer id_categoria) {
         return categoriaDao.findById(id_categoria);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public String getCodigoTop(String Username) {
+        String codigo = categoriaDao.getCodigoTop(Username);
+        String iniUsername = Username.substring(0, 2).toUpperCase();
+        if(Objects.equals(null, codigo))
+            codigo = iniUsername+"C001";
+        else
+            codigo = iniUsername+"C"+String.format("%03d",(Integer.parseInt(codigo.substring(3))+1));   
+        return codigo;
     }
     
 }

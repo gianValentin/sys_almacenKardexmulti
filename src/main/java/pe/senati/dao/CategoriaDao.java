@@ -18,4 +18,5 @@ public interface CategoriaDao {
     public abstract Collection<CategoriaVo> findAll(String Username);
     public abstract CategoriaVo findById(Integer id_categoria);
     
+    public abstract String getCodigoTop(String Username);
 }
